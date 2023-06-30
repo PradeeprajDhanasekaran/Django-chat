@@ -62,4 +62,4 @@ class ChatConsumer(AsyncWebsocketConsumer):
     #     if receiver == get_user.username:
     #         ChatNotification.objects.create(chat=chat_obj, user=get_user)
 
-    #for testing
+  
