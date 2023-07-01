@@ -3,7 +3,7 @@
 
 #### User Registration
 
-```http
+```https
   POST /api/register/
 ```
 
@@ -14,7 +14,7 @@
 
 #### User Login
 
-```http
+```https
   POST /api/login/
 ```
 
@@ -25,7 +25,7 @@
 
 #### Get Access token
 
-```http
+```https
   POST /api/token/refresh/
 ```
 
@@ -35,7 +35,7 @@
 
 #### Get Online users
 
-```http
+```https
   GET /api/online-users/
 ```
 
@@ -46,7 +46,7 @@
 
 #### Logout
 
-```http
+```https
   POST /api/logout/
 ```
 
@@ -56,7 +56,7 @@
 
 #### Friends Recommendation
 
-```http
+```https
   GET /api/suggested-friends/<int:user_id>
 ```
 
@@ -66,7 +66,7 @@
 
 #### Start a chat
 
-```http
+```https
   POST /api/chat/start/
 ```
 
@@ -76,7 +76,7 @@
 
 #### Send a message
 
-```http
+```https
   WEBSOCKET /api/chat/send/
 ```
 
