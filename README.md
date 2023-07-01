@@ -1,5 +1,23 @@
 # Django Chat App
+## Installation 
 
+To install, run the following command
+
+```bash
+  $ pip install -r requirements.txt
+```
+
+```bash
+  $ python manage.py makemigrations
+```
+
+```bash
+  $ python manage.py migrate
+```
+
+```bash
+  $ python manage.py runserver
+```
 ## API Reference
 
 #### User Registration
@@ -95,25 +113,6 @@
 
 "*Note: Requires user authentication.*"
 
-## Installation 
-
-To install, run the following command
-
-```bash
-  $ pip install -r requirements.txt
-```
-
-```bash
-  $ python manage.py makemigrations
-```
-
-```bash
-  $ python manage.py migrate
-```
-
-```bash
-  $ python manage.py runserver
-```
 
 
 I have also attached postman collections file in postman_collections folder for reference
