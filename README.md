@@ -1,3 +1,4 @@
+# Django Chat App
 
 ## API Reference
 
@@ -33,6 +34,8 @@
 | :-------- | :------- | :-------------------------------- |
 | `refresh` | `string` | refresh token  (required) |
 
+"*Note: Requires user authentication.*"
+
 #### Get Online users
 
 ```https
@@ -43,6 +46,7 @@
 | :-------- | :------- | :-------------------------------- |
 | - | - | -  |
 
+"*Note: Requires user authentication.*"
 
 #### Logout
 
@@ -54,6 +58,7 @@
 | :-------- | :------- | :-------------------------------- |
 | `refresh` | `string` | refresh token   (required)  |
 
+"*Note: Requires user authentication.*"
 #### Friends Recommendation
 
 ```https
@@ -64,6 +69,7 @@
 | :-------- | :------- | :-------------------------------- |
 | - | - | -  |
 
+
 #### Start a chat
 
 ```https
@@ -73,6 +79,8 @@
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `receiver_id` | `string` | receivers username  (required) |
+
+"*Note: Requires user authentication.*"
 
 #### Send a message
 
@@ -85,6 +93,7 @@
 | `message` | `string` | message for receiver  (required) |
 | `receiver` | `string` |  receivers username  (required) |
 
+"*Note: Requires user authentication.*"
 
 ## Installation 
 
