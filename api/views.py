@@ -44,9 +44,7 @@ def login(request):
 
     if user is None:
         return Response({'error': 'Invalid username or password.'}, status=status.HTTP_401_UNAUTHORIZED)
-    # user.online = True
-    # user.save()
-
+ 
     refresh = RefreshToken.for_user(user)
 
     return Response({'refresh': str(refresh), 'access': str(refresh.access_token)}, status=status.HTTP_200_OK)
@@ -69,10 +67,6 @@ def logout(request):
     user.save()
     return Response({'message': 'Logout successful.'}, status=status.HTTP_200_OK)
 
-
-
-
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_online_users(request):
@@ -84,7 +78,6 @@ def get_online_users(request):
 @permission_classes([IsAuthenticated])
 def start_chat(request):
     channel_layer = get_channel_layer()
-    # access_token = request.META.get('HTTP_AUTHORIZATION').split(' ')[1]
     receiver_id = request.data.get('receiver_id')
     my_id = request.user.username
     groupName = '-'.join(sorted([my_id,receiver_id]))
@@ -103,7 +96,6 @@ def start_chat(request):
     else:
         return Response({'error': 'Receiver not found'}, status=status.HTTP_404_NOT_FOUND)
 
-    return Response('connected', status=status.HTTP_200_OK)
 def get_user_id_from_token(token):
     try:
         access_token = AccessToken(token)
