@@ -1,0 +1,297 @@
+{
+	"info": {
+		"_postman_id": "d7dcdd14-0e46-4be2-8997-bcea50ddd8aa",
+		"name": "Chat Apis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22114138"
+	},
+	"item": [
+		{
+			"name": "User Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"user3\",\n    \"password\": \"user3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/register/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Access token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY4ODMwMzI3NywiaWF0IjoxNjg4MjE2ODc3LCJqdGkiOiJhNTNiN2JlYWFhZjI0MWMzYWU1M2E0NjNiZWZhMjIwNSIsInVzZXJfaWQiOjR9.YDsVHltZOPPpF7hYVeOH-2KWyVmoyfWlk1ltWG7mfhE\"\n   \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/token/refresh/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"token",
+						"refresh",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"user1\",\n    \"password\": \"password1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/login/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Online Users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4MTIzOTgzLCJpYXQiOjE2ODgwMzc1ODMsImp0aSI6ImI2NmJjZWQ2MzIwNzRkY2RiMmRkOTc4NmU5M2YyMDQzIiwidXNlcl9pZCI6MX0.yqMnsqcmtMO97efl2GRaEm5hxjvk0WjOs4bkfBCaDfY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/online-users/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"online-users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4MTIzOTgzLCJpYXQiOjE2ODgwMzc1ODMsImp0aSI6ImI2NmJjZWQ2MzIwNzRkY2RiMmRkOTc4NmU5M2YyMDQzIiwidXNlcl9pZCI6MX0.yqMnsqcmtMO97efl2GRaEm5hxjvk0WjOs4bkfBCaDfY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4MDMwNTgyLCJpYXQiOjE2ODgwMzAyODIsImp0aSI6IjczNzViYmE1ODA3YzQwZWE5YzAyYWFkYzc4ZWFmMWZlIiwidXNlcl9pZCI6MX0.-YabqhcnjGHgc6gKBrGmZHZ2VxCnwA8wXw6S4RZAK2c",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"refresh_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY4ODEyMzk4MywiaWF0IjoxNjg4MDM3NTgzLCJqdGkiOiI2Nzg1MjBhZmZkZDQ0MzdkYTgxODQ4YmM0YTUxNzNiYiIsInVzZXJfaWQiOjF9.M1Imc-NAPjf4H54ZEgwbCqo200x8ZyLvq0RaN5jEeWM\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/logout/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"logout",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Friends Recommendation",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4MDMwNTgyLCJpYXQiOjE2ODgwMzAyODIsImp0aSI6IjczNzViYmE1ODA3YzQwZWE5YzAyYWFkYzc4ZWFmMWZlIiwidXNlcl9pZCI6MX0.-YabqhcnjGHgc6gKBrGmZHZ2VxCnwA8wXw6S4RZAK2c",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/suggested-friends/142/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"suggested-friends",
+						"142",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Start a Chat",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4Mjk1MTAzLCJpYXQiOjE2ODgyMDg3MDMsImp0aSI6ImM1ZTI3NWI1OTIxODQyYmY4N2ViZmJjMTcyYjYzZWI0IiwidXNlcl9pZCI6Nn0.USfCVdkpY-4Y4vtTQtZxuUDICQYKiGC-Zr9JkeLsJs0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4Mjk1MTAzLCJpYXQiOjE2ODgyMDg3MDMsImp0aSI6ImM1ZTI3NWI1OTIxODQyYmY4N2ViZmJjMTcyYjYzZWI0IiwidXNlcl9pZCI6Nn0.USfCVdkpY-4Y4vtTQtZxuUDICQYKiGC-Zr9JkeLsJs0",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"message\": \"this is user1\",\r\n    \"username\": \"user3\",\r\n    \"receiver_id\":\"2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/chat/start/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"chat",
+						"start",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

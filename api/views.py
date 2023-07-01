@@ -1,4 +1,5 @@
-from rest_framework_simplejwt.exceptions import TokenError
+from rest_framework_simplejwt.exceptions import TokenError, AuthenticationFailed
+from rest_framework_simplejwt.tokens import AccessToken
 from django.db import IntegrityError
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -8,7 +9,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from asgiref.sync import async_to_sync
 import json
+from channels.layers import get_channel_layer
 from api.serializers import UserSerializer
 from .models import User, Message
 from pathlib import Path
@@ -41,8 +44,8 @@ def login(request):
 
     if user is None:
         return Response({'error': 'Invalid username or password.'}, status=status.HTTP_401_UNAUTHORIZED)
-    user.online = True
-    user.save()
+    # user.online = True
+    # user.save()
 
     refresh = RefreshToken.for_user(user)
 
@@ -77,17 +80,39 @@ def get_online_users(request):
     data = UserSerializer(query, many=True).data
     return Response(data, status=status.HTTP_200_OK)
 
-@login_required
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def start_chat(request):
-    # Implement logic to start a chat here
-    pass
+    channel_layer = get_channel_layer()
+    # access_token = request.META.get('HTTP_AUTHORIZATION').split(' ')[1]
+    receiver_id = request.data.get('receiver_id')
+    my_id = request.user.username
+    groupName = '-'.join(sorted([my_id,receiver_id]))
+    channel_name = f"chat_{groupName}" 
 
-@login_required
-@api_view(['POST'])
-def send_message(request):
-    # Implement logic to send a message here
-    pass
+    async def add_user_to_group(channel_name, user_id):
+        await channel_layer.group_add(f"chat_{user_id}", channel_name)
+    async_to_sync(add_user_to_group)(channel_name, my_id)
+    async_to_sync(add_user_to_group)(channel_name, receiver_id)
+    receiver = User.objects.filter(username=receiver_id)
+    if receiver.exists():
+        if receiver.first().online:
+            return Response({'message': 'User is available to receive messages'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'User is unavailable'}, status=status.HTTP_200_OK)
+    else:
+        return Response({'error': 'Receiver not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    return Response('connected', status=status.HTTP_200_OK)
+def get_user_id_from_token(token):
+    try:
+        access_token = AccessToken(token)
+        user_id = access_token['user_id']
+        return user_id
+    except Exception as e:
+        raise AuthenticationFailed('Invalid access token')
+
+
 
 @api_view(['GET'])
 def suggested_friends(request, user_id):
