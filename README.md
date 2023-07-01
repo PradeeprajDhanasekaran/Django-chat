@@ -1,7 +1,7 @@
 # Django Chat App
 ## Installation 
 
-To install, run the following command
+To install, run the following commands
 
 ```bash
   $ pip install -r requirements.txt
