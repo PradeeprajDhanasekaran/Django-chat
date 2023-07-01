@@ -21,24 +21,39 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data=None, bytes_data=None):
         data = json.loads(text_data)
         message = data['message']
-        username = data['username']
         other_user_id = data['receiver']
         receiver =  'chat_%s' % other_user_id
         receiver_id = data['receiver']
-        my_username = self.scope['user'].username
-        groupName = '-'.join(sorted([my_username,receiver_id]))
-        channel_name = f"chat_{groupName}" 
-        await self.save_message(username, self.room_group_name, message, receiver_id)
-        await self.channel_layer.group_send(
-            receiver ,
-     
-            {
-                "type": "chat_message",
-                "message": message,
-                "username": username,
-            }
-        )
-
+        username = self.scope['user'].username
+        # groupName = '-'.join(sorted([my_username,receiver_id]))
+        # # channel_name = f"chat_{groupName}" 
+        recipient = await self.get_user_by_id(receiver_id)
+        # recipient_exists = await database_sync_to_async(recipient.exists)()
+        if  recipient != 'notExist' :
+            if recipient :
+                await self.save_message( self.room_group_name, message, receiver_id)
+                await self.channel_layer.group_send(
+                    receiver,
+                    {
+                        "type": "chat_message",
+                        "message": message,
+                        "username": username,
+                    }
+                )
+            else:
+                await self.send(text_data=json.dumps({
+                    'error': 'Recipient is offline',
+                }))
+        else:
+            await self.send(text_data=json.dumps({
+                'error': 'Recipient not found',
+            }))
+    @database_sync_to_async
+    def get_user_by_id(self, user_id):
+        user = User.objects.filter(username=user_id)
+        if user.exists():
+            return User.objects.filter(username=user_id).first().online
+        return 'notExist'
     async def chat_message(self, event):
         message = event['message']
         username = event['username']
@@ -58,7 +73,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 
     @database_sync_to_async
-    def save_message(self, username, thread_name, message, receiver):
+    def save_message(self, thread_name, message, receiver):
         sender_id = self.scope['user']
         receiver_id = User.objects.get(username=receiver)
         chat_obj = Message.objects.create(
